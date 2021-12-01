@@ -8,7 +8,7 @@ process mlst {
     tuple val(sample_id), path(assembly)
 
     output:
-    tuple val(sample_id), path("${sample_id}_mlst.tsv"), emit: csv
+    tuple val(sample_id), path("${sample_id}_mlst.csv"), emit: csv
     tuple val(sample_id), path("${sample_id}_mlst_provenance.yml"), emit: provenance
     
     script:
