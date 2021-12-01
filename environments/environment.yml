@@ -1,0 +1,8 @@
+name: mlst
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+dependencies:
+  - python=3
+  - mlst=2.16.1
