@@ -8,7 +8,7 @@ include { hash_files } from './modules/hash_files.nf'
 include { pipeline_provenance } from './modules/provenance.nf'
 include { collect_provenance } from './modules/provenance.nf'
 include { mlst } from './modules/mlst.nf'
-
+include { parse_alleles } from './modules/mlst.nf'
 
 workflow {
   ch_start_time = Channel.of(LocalDateTime.now())
@@ -27,6 +27,7 @@ workflow {
   main:
   hash_files(ch_assemblies.combine(Channel.of("assembly-input")))
   mlst(ch_assemblies)
+  parse_alleles(mlst.out.json)
 
   ch_provenance = mlst.out.provenance
   ch_provenance = ch_provenance.join(hash_files.out.provenance).map{ it -> [it[0], [it[1]] << it[2]] }
