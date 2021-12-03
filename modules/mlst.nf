@@ -2,14 +2,13 @@ process mlst {
 
     tag { sample_id }
 
-    publishDir "${params.outdir}/${sample_id}", mode: 'copy', pattern: "${sample_id}_mlst.{csv,json}"
+    publishDir "${params.outdir}/${sample_id}", mode: 'copy', pattern: "${sample_id}_mlst.json"
 
     input:
     tuple val(sample_id), path(assembly)
 
     output:
-    tuple val(sample_id), path("${sample_id}_mlst.csv"), emit: csv
-    tuple val(sample_id), path("${sample_id}_mlst.json"), emit: json
+    tuple val(sample_id), path("${sample_id}_mlst.csv"), path("${sample_id}_mlst.json"), emit: mlst
     tuple val(sample_id), path("${sample_id}_mlst_provenance.yml"), emit: provenance
     
     script:
@@ -34,16 +33,24 @@ process parse_alleles {
     executor 'local'
 
     publishDir "${params.outdir}/${sample_id}", mode: 'copy', pattern: "${sample_id}_alleles.csv"
+    publishDir "${params.outdir}/${sample_id}", mode: 'copy', pattern: "${sample_id}_sequence_type.csv"
 
     input:
-    tuple val(sample_id), path(mlst_json)
+    tuple val(sample_id), path(mlst_csv), path(mlst_json)
 
     output:
-    tuple val(sample_id), path("${sample_id}_alleles.csv")
+    tuple val(sample_id), path("${sample_id}_alleles.csv"), path("${sample_id}_sequence_type.csv")
 
     script:
     """
     parse_alleles.py -s ${sample_id} ${mlst_json} > ${sample_id}_alleles.csv
+    echo 'sample_id' > sample_id.csv
+    echo ${sample_id} >> sample_id.csv
+    echo 'scheme,sequence_type' > sequence_type.csv
+    cut -d ',' -f 2,3 ${mlst_csv} >> sequence_type.csv
+    echo 'score' > score.csv
+    awk -F ',' '{sum+=\$7}; END{print sum}' ${sample_id}_alleles.csv >> score.csv
+    paste -d ',' sample_id.csv sequence_type.csv score.csv > ${sample_id}_sequence_type.csv
     """
 }
 

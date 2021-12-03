@@ -27,7 +27,7 @@ workflow {
   main:
   hash_files(ch_assemblies.combine(Channel.of("assembly-input")))
   mlst(ch_assemblies)
-  parse_alleles(mlst.out.json)
+  parse_alleles(mlst.out.mlst)
 
   ch_provenance = mlst.out.provenance
   ch_provenance = ch_provenance.join(hash_files.out.provenance).map{ it -> [it[0], [it[1]] << it[2]] }
