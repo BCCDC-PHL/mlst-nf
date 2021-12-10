@@ -7,6 +7,8 @@ nextflow.enable.dsl = 2
 include { hash_files } from './modules/hash_files.nf'
 include { pipeline_provenance } from './modules/provenance.nf'
 include { collect_provenance } from './modules/provenance.nf'
+include { quast } from './modules/quast.nf'
+include { parse_quast_report } from './modules/quast.nf'
 include { mlst } from './modules/mlst.nf'
 include { parse_alleles } from './modules/mlst.nf'
 
@@ -26,11 +28,14 @@ workflow {
 
   main:
   hash_files(ch_assemblies.combine(Channel.of("assembly-input")))
+  quast(ch_assemblies)
+  parse_quast_report(quast.out.tsv)
   mlst(ch_assemblies)
   parse_alleles(mlst.out.mlst)
 
   ch_provenance = mlst.out.provenance
   ch_provenance = ch_provenance.join(hash_files.out.provenance).map{ it -> [it[0], [it[1]] << it[2]] }
+  ch_provenance = ch_provenance.join(quast.out.provenance).map{ it -> [it[0], it[1] << it[2]] }
   ch_provenance = ch_provenance.join(ch_assemblies.map{ it -> it[0] }.combine(ch_pipeline_provenance)).map{ it -> [it[0], it[1] << it[2]] }
   collect_provenance(ch_provenance)
   
