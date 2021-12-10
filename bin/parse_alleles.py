@@ -26,6 +26,8 @@ def main(args):
             'score',
         ]))
 
+        if not mlst[sample]['alleles']:
+            continue
         num_alleles = len(mlst[sample]['alleles'])
         scheme = mlst[sample]['scheme']
         for locus, allele in mlst[sample]['alleles'].items():
