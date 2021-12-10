@@ -88,7 +88,8 @@ a timestamp with format `YYYYMMDDHHMMSS` to ensure that a unique file will be pr
 are stored to the same directory.
 
 ```yml
-- tool_name: mlst
+- process_name: mlst
+  tool_name: mlst
   tool_version: 2.16.1
   parameters:
   - parameter: minid
