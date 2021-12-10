@@ -13,7 +13,8 @@ process mlst {
     
     script:
     """
-    printf -- "- tool_name: mlst\\n  tool_version: \$(mlst --version | cut -d ' ' -f 2)\\n  parameters:\\n" > ${sample_id}_mlst_provenance.yml
+    printf -- "- process_name: mlst\\n" > ${sample_id}_mlst_provenance.yml
+    printf -- "  tool_name: mlst\\n  tool_version: \$(mlst --version | cut -d ' ' -f 2)\\n  parameters:\\n" >> ${sample_id}_mlst_provenance.yml
     printf -- "  - parameter: minid\\n    value: ${params.minid}\\n" >> ${sample_id}_mlst_provenance.yml
     printf -- "  - parameter: mincov\\n    value: ${params.mincov}\\n" >> ${sample_id}_mlst_provenance.yml
     printf -- "  - parameter: minscore\\n    value: ${params.minscore}\\n" >> ${sample_id}_mlst_provenance.yml

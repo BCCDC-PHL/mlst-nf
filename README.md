@@ -100,6 +100,9 @@ are stored to the same directory.
 - input_filename: sample-01.fa
   input_path: /absolute/path/to/sample-01.fa
   sha256: ddd3a297d54841994e021829201ca86e6c83d62c1b57b035bb69bd4d5f9ae279
+- process_name: quast
+  tool_name: quast
+  tool_version: 5.0.2
 - pipeline_name: BCCDC-PHL/mlst-nf
   pipeline_version: 0.1.0
 - timestamp_analysis_start: 2021-12-02T15:46:38.472211
