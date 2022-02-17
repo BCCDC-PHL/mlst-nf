@@ -2,7 +2,7 @@ process mlst {
 
     tag { sample_id }
 
-    publishDir "${params.outdir}/${sample_id}", mode: 'copy', pattern: "${sample_id}_mlst.json"
+    publishDir params.versioned_outdir ? "${params.outdir}/${sample_id}/${params.pipeline_short_name}-v${params.pipeline_minor_version}-output" : "${params.outdir}/${sample_id}", mode: 'copy', pattern: "${sample_id}_mlst.json"
 
     input:
     tuple val(sample_id), path(assembly)
@@ -33,8 +33,8 @@ process parse_alleles {
     
     executor 'local'
 
-    publishDir "${params.outdir}/${sample_id}", mode: 'copy', pattern: "${sample_id}_alleles.csv"
-    publishDir "${params.outdir}/${sample_id}", mode: 'copy', pattern: "${sample_id}_sequence_type.csv"
+    publishDir params.versioned_outdir ? "${params.outdir}/${sample_id}/${params.pipeline_short_name}-v${params.pipeline_minor_version}-output" : "${params.outdir}/${sample_id}", mode: 'copy', pattern: "${sample_id}_alleles.csv"
+    publishDir params.versioned_outdir ? "${params.outdir}/${sample_id}/${params.pipeline_short_name}-v${params.pipeline_minor_version}-output" : "${params.outdir}/${sample_id}", mode: 'copy', pattern: "${sample_id}_sequence_type.csv"
 
     input:
     tuple val(sample_id), path(mlst_csv), path(mlst_json)
@@ -54,4 +54,3 @@ process parse_alleles {
     paste -d ',' sample_id.csv sequence_type.csv score.csv > ${sample_id}_sequence_type.csv
     """
 }
-
