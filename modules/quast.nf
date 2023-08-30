@@ -13,7 +13,14 @@ process quast {
       """
       printf -- "- process_name: quast\\n" > ${sample_id}_quast_provenance.yml
       printf -- "  tool_name: quast\\n  tool_version: \$(quast --version | cut -d ' ' -f 2 | tr -d 'v')\\n" >> ${sample_id}_quast_provenance.yml
-      quast --threads ${task.cpus} ${assembly} --space-efficient --fast --output-dir ${sample_id}
+
+      quast --threads ${task.cpus} \
+        --space-efficient \
+	--fast \
+	--min-contig 0 \
+        ${assembly}  \
+	--output-dir ${sample_id}
+
       mv ${sample_id}/transposed_report.tsv ${sample_id}_quast.tsv
       """
 }
