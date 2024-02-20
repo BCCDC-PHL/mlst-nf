@@ -1,6 +1,17 @@
 # mlst-nf
 A nextflow pipeline for running [mlst](https://github.com/tseemann/mlst) on a set of assemblies.
 
+```mermaid
+flowchart TD
+  assembly --> quast(quast)
+  quast --> assembly_qc
+  assembly --> mlst(mlst)
+  mlst --> mlst.json
+  mlst --> parse_alleles(parse_alleles)
+  parse_alleles --> alleles.csv
+  parse_alleles --> sequence_type.csv
+```
+
 ## Usage
 
 ```
