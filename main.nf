@@ -37,23 +37,23 @@ workflow {
 
     if (params.collect_outputs) {
         parse_quast_report.out.map{ it -> it[1] }.collectFile(
-        name: params.collected_outputs_prefix + "_quast.csv",
-                  storeDir: params.outdir,
-                  keepHeader: true,
-                  sort: { it -> it.readLines()[1].split(',')[0] }
-              )
-              parse_alleles.out.alleles.map{ it -> it[1] }.collectFile(
-                  name: params.collected_outputs_prefix + "_alleles.csv",
-                  storeDir: params.outdir,
-                  keepHeader: true,
-                  sort: { it -> it.readLines()[1].split(',')[0] }
-              )
-              parse_alleles.out.sequence_type.map{ it -> it[1] }.collectFile(
-                  name: params.collected_outputs_prefix + "_sequence_type.csv",
-                  storeDir: params.outdir,
-                  keepHeader: true,
-                  sort: { it -> it.readLines()[1].split(',')[0] }
-              )
+            name: params.collected_outputs_prefix + "_quast.csv",
+            storeDir: params.outdir,
+            keepHeader: true,
+            sort: { it -> it.readLines()[1].split(',')[0] }
+        )
+        parse_alleles.out.alleles.map{ it -> it[1] }.collectFile(
+            name: params.collected_outputs_prefix + "_alleles.csv",
+            storeDir: params.outdir,
+            keepHeader: true,
+            sort: { it -> it.readLines()[1].split(',')[0] }
+        )
+        parse_alleles.out.sequence_type.map{ it -> it[1] }.collectFile(
+            name: params.collected_outputs_prefix + "_sequence_type.csv",
+            storeDir: params.outdir,
+            keepHeader: true,
+            sort: { it -> it.readLines()[1].split(',')[0] }
+        )
     }
 
     ch_sample_ids = ch_assemblies.map{ it -> it[0] }
