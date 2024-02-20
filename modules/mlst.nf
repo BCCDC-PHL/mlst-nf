@@ -47,7 +47,8 @@ process parse_alleles {
     tuple val(sample_id), path(mlst_csv), path(mlst_json)
 
     output:
-    tuple val(sample_id), path("${sample_id}_alleles.csv"), path("${sample_id}_sequence_type.csv")
+    tuple val(sample_id), path("${sample_id}_alleles.csv"),       emit: alleles
+    tuple val(sample_id), path("${sample_id}_sequence_type.csv"), emit: sequence_type
 
     script:
     """
