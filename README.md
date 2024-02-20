@@ -131,6 +131,8 @@ are stored to the same directory.
 ```yml
 - pipeline_name: BCCDC-PHL/mlst-nf
   pipeline_version: 0.1.4
+  nextflow_session_id: f18b89aa-06f7-41e4-b016-3519dfd5a5cb
+  nextflow_run_name: sharp_bhaskara
   timestamp_analysis_start: 2024-02-20T22:59:37.862710
 - input_filename: NC-000913.3.fa
   input_path: /home/runner/work/mlst-nf/mlst-nf/.github/data/assemblies/NC-000913.3.fa
