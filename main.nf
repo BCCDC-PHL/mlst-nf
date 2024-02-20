@@ -13,11 +13,14 @@ include { mlst }                   from './modules/mlst.nf'
 include { parse_alleles }          from './modules/mlst.nf'
 
 workflow {
-    ch_start_time = Channel.of(LocalDateTime.now())
-    ch_pipeline_name = Channel.of(workflow.manifest.name)
-    ch_pipeline_version = Channel.of(workflow.manifest.version)
 
-    ch_pipeline_provenance = pipeline_provenance(ch_pipeline_name.combine(ch_pipeline_version).combine(ch_start_time))
+    ch_workflow_metadata = Channel.value([
+	workflow.sessionId,
+	workflow.runName,
+	workflow.manifest.name,
+	workflow.manifest.version,
+	workflow.start,
+    ])
 
     if (params.samplesheet_input != 'NO_FILE') {
 	ch_assemblies = Channel.fromPath(params.samplesheet_input).splitCsv(header: true).map{ it -> [it['ID'], it['ASSEMBLY']] }
@@ -53,11 +56,14 @@ workflow {
 	    sort: { it -> it.readLines()[1].split(',')[0] }
 	)
     }
-    
-    ch_provenance = mlst.out.provenance
-    ch_provenance = ch_provenance.join(hash_files.out.provenance).map{ it -> [it[0], [it[1]] << it[2]] }
-    ch_provenance = ch_provenance.join(quast.out.provenance).map{ it -> [it[0], it[1] << it[2]] }
-    ch_provenance = ch_provenance.join(ch_assemblies.map{ it -> it[0] }.combine(ch_pipeline_provenance)).map{ it -> [it[0], it[1] << it[2]] }
+
+    ch_sample_ids = ch_assemblies.map{ it -> it[0] }
+    ch_provenance = ch_sample_ids
+    ch_pipeline_provenance = pipeline_provenance(ch_workflow_metadata)
+    ch_provenance = ch_provenance.combine(ch_pipeline_provenance).map{ it -> [it[0], [it[1]]] }
+    ch_provenance = ch_provenance.join(hash_files.out.provenance).map{ it -> [it[0], it[1] << it[2]] }
+    ch_provenance = ch_provenance.join(mlst.out.provenance).map{ it ->       [it[0], it[1] << it[2]] }
+    ch_provenance = ch_provenance.join(quast.out.provenance).map{ it ->      [it[0], it[1] << it[2]] }
     collect_provenance(ch_provenance)
   
 }
