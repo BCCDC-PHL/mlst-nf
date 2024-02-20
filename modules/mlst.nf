@@ -13,11 +13,18 @@ process mlst {
     
     script:
     """
-    printf -- "- process_name: mlst\\n" > ${sample_id}_mlst_provenance.yml
-    printf -- "  tool_name: mlst\\n  tool_version: \$(mlst --version | cut -d ' ' -f 2)\\n  parameters:\\n" >> ${sample_id}_mlst_provenance.yml
-    printf -- "  - parameter: minid\\n    value: ${params.minid}\\n" >> ${sample_id}_mlst_provenance.yml
-    printf -- "  - parameter: mincov\\n    value: ${params.mincov}\\n" >> ${sample_id}_mlst_provenance.yml
-    printf -- "  - parameter: minscore\\n    value: ${params.minscore}\\n" >> ${sample_id}_mlst_provenance.yml
+    printf -- "- process_name: mlst\\n"                                     >> ${sample_id}_mlst_provenance.yml
+    printf -- "  tools:\\n"                                                 >> ${sample_id}_mlst_provenance.yml
+    printf -- "    - tool_name: mlst\\n"                                    >> ${sample_id}_mlst_provenance.yml
+    printf -- "      tool_version: \$(mlst --version | cut -d ' ' -f 2)\\n" >> ${sample_id}_mlst_provenance.yml
+    printf -- "      parameters:\\n"                                        >> ${sample_id}_mlst_provenance.yml
+    printf -- "      - parameter: minid\\n"                                 >> ${sample_id}_mlst_provenance.yml
+    printf -- "        value: ${params.minid}\\n"                           >> ${sample_id}_mlst_provenance.yml
+    printf -- "      - parameter: mincov\\n"                                >> ${sample_id}_mlst_provenance.yml
+    printf -- "        value: ${params.mincov}\\n"                          >> ${sample_id}_mlst_provenance.yml
+    printf -- "      - parameter: minscore\\n"                              >> ${sample_id}_mlst_provenance.yml
+    printf -- "        value: ${params.minscore}\\n"                        >> ${sample_id}_mlst_provenance.yml
+
     mlst \
       --minid ${params.minid} \
       --mincov ${params.mincov} \
