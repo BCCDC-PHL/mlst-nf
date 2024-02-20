@@ -118,7 +118,7 @@ def main():
     ]
 
     report = parse_transposed_quast_report(args.transposed_quast_report)
-    writer = csv.DictWriter(sys.stdout, fieldnames=output_fieldnames)
+    writer = csv.DictWriter(sys.stdout, fieldnames=output_fieldnames, dialect='unix', extrasaction='ignore', quoting=csv.QUOTE_MINIMAL)
     writer.writeheader()
     for record in report:
         writer.writerow(record)
