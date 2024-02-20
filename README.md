@@ -1,4 +1,7 @@
+[![Tests](https://github.com/BCCDC-PHL/mlst-nf/actions/workflows/tests.yml/badge.svg)](https://github.com/BCCDC-PHL/mlst-nf/actions/workflows/tests.yml)
+
 # mlst-nf
+
 A nextflow pipeline for running [mlst](https://github.com/tseemann/mlst) on a set of assemblies.
 
 ```mermaid
