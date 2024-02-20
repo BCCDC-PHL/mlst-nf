@@ -129,23 +129,32 @@ a timestamp with format `YYYYMMDDHHMMSS` to ensure that a unique file will be pr
 are stored to the same directory.
 
 ```yml
-- process_name: mlst
-  tool_name: mlst
-  tool_version: 2.16.1
-  parameters:
-  - parameter: minid
-    value: 95
-  - parameter: mincov
-    value: 10
-  - parameter: minscore
-    value: 50
-- input_filename: sample-01.fa
-  input_path: /absolute/path/to/sample-01.fa
-  sha256: ddd3a297d54841994e021829201ca86e6c83d62c1b57b035bb69bd4d5f9ae279
-- process_name: quast
-  tool_name: quast
-  tool_version: 5.0.2
 - pipeline_name: BCCDC-PHL/mlst-nf
-  pipeline_version: 0.1.0
-- timestamp_analysis_start: 2021-12-02T15:46:38.472211
+  pipeline_version: 0.1.4
+  timestamp_analysis_start: 2024-02-20T22:59:37.862710
+- input_filename: NC-000913.3.fa
+  input_path: /home/runner/work/mlst-nf/mlst-nf/.github/data/assemblies/NC-000913.3.fa
+  sha256: 6b195feda4c66140f6762742eb8b30c2652f02b45878b174f5b00ef85ecc95d7
+- process_name: mlst
+  tools:
+    - tool_name: mlst
+      tool_version: 2.16.1
+      parameters:
+      - parameter: minid
+        value: 95
+      - parameter: mincov
+        value: 10
+      - parameter: minscore
+        value: 50
+- process_name: quast
+  tools:
+    - tool_name: quast
+      tool_version: 5.0.2
+      parameters:
+        - parameter: --space-efficient
+          value: null
+        - parameter: --fast
+          value: null
+        - parameter: --min-contig
+          value: 0
 ```
