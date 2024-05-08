@@ -45,33 +45,6 @@ sample-01
 └── sample-01_sequence_type.csv
 ```
 
-If the `--versioned_outdir` flag is used, then a sub-directory will be created below each sample, named with the pipeline name and minor version:
-
-```
-sample-01
-    └── mlst-nf-v0.1-output
-        ├── sample-01_20211202154752_provenance.yml
-        ├── sample-01_alleles.csv     
-        ├── sample-01_mlst.json	      
-        └── sample-01_sequence_type.csv
-```
-
-This is provided as a way of combining outputs of several different pipelines or re-analysis with future versions of this pipeline:
-
-```
-sample-01
-    └── mlst-nf-v0.1-output
-    │   ├── sample-01_20211202154752_provenance.yml
-    │   ├── sample-01_alleles.csv
-    │   ├── sample-01_mlst.json
-    │   └── sample-01_sequence_type.csv
-    └── mlst-nf-v0.2-output
-        ├── sample-01_20220321113128_provenance.yml
-        ├── sample-01_alleles.csv
-        ├── sample-01_mlst.json
-        └── sample-01_sequence_type.csv
-```
-
 The `mlst.json` output is generated directly by the [mlst](https://github.com/tseemann/mlst) tool.
 It has the following format:
 
