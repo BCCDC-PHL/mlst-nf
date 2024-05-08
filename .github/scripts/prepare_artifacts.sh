@@ -4,9 +4,9 @@ artifacts_dir="artifacts"
 
 echo "Prepare artifacts .." >> ${artifacts_dir}/test.log
 
-mkdir -p ${artifacts_dir}/fastq
+mkdir -p ${artifacts_dir}/assemblies
 
-mv .github/data/fastq/*.fastq.gz ${artifacts_dir}/fastq
+cp -r .github/data/assemblies/* ${artifacts_dir}/assemblies
 
 mkdir -p ${artifacts_dir}/pipeline_outputs
 
