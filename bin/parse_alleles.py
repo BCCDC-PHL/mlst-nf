@@ -14,7 +14,7 @@ def main(args):
         if args.sample_id:
             sample_id = args.sample_id
         else:
-            sample_id = sample['id']
+            sample_id = sample
 
         print(','.join([
             'sample_id',
@@ -26,11 +26,11 @@ def main(args):
             'score',
         ]))
 
-        if not sample['alleles']:
+        if not mlst[sample]['alleles']:
             continue
-        num_alleles = len(sample['alleles'])
-        scheme = sample['scheme']
-        for locus, allele in sample['alleles'].items():
+        num_alleles = len(mlst[sample]['alleles'])
+        scheme = mlst[sample]['scheme']
+        for locus, allele in mlst[sample]['alleles'].items():
             perfect_match = True
             novel_allele = False
             score = round(90 / num_alleles, 2)
