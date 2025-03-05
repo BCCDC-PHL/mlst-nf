@@ -1,8 +1,7 @@
-name: mlst
+name: mlst-nf
 channels:
   - conda-forge
   - bioconda
-  - defaults
 dependencies:
   - python=3
   - mlst=2.16.1
