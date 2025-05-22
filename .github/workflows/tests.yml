@@ -16,8 +16,6 @@ jobs:
           - nextflow_version: "21.04.3"
             java_version: "8"
 	    profile: "conda"
-          - nextflow_version: "24.10.6"
-            java_version: "17"
 	  - nextflow_version: "24.10.6"
             java_version: "17"
 	    profile: "conda"
