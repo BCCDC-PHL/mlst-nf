@@ -12,8 +12,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        nextflow_version: ["21.04.3", "23.10.1"]
-    name: Run tests
+        include:
+          - nextflow_version: "21.04.3"
+            java_version: "8"
+	    profile: "conda"
+          - nextflow_version: "24.10.6"
+            java_version: "17"
+	  - nextflow_version: "24.10.6"
+            java_version: "17"
+	    profile: "conda"
+	  - nextflow_version: "24.10.6"
+            java_version: "17"
+	    profile: "apptainer"
+    name: Nextflow v${{ matrix.nextflow_version }} / {{ matrix.profile }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
@@ -22,9 +33,8 @@ jobs:
     - name: Setup Java
       uses: actions/setup-java@v4
       with:
-        java-version: '11'
         distribution: 'temurin'
-        architecture: x64
+        java-version: ${{ matrix.java_version }}
     - name: Install Miniconda
       run: bash .github/scripts/install_conda.sh
     - name: Install Nextflow
@@ -34,6 +44,8 @@ jobs:
     - name: Download Assemblies
       run: bash .github/scripts/download_assemblies.sh
     - name: Run Pipeline
+      env:
+        PROFILE: ${{ matrix.profile }}
       run: bash .github/scripts/run_pipeline.sh
     - name: Create Output Checking Environment
       run: bash .github/scripts/create_output_checking_environment.sh
