@@ -39,6 +39,8 @@ jobs:
       env:
         NXF_VER: ${{ matrix.nextflow_version }}
       run: bash .github/scripts/install_nextflow.sh
+    - name: Install Apptainer
+      run: bash .github/scripts/install_apptainer.sh
     - name: Download Assemblies
       run: bash .github/scripts/download_assemblies.sh
     - name: Run Pipeline
