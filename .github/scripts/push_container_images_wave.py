@@ -43,10 +43,22 @@ def push_image_apptainer(source_image_file, image_url):
     subprocess.run(apptainer_push_cmd)
 
 
+def tag_image_docker(source_image_url, dest_image_url):
+    """
+    """
+    docker_tag_cmd = [
+        "docker",
+        "tag",
+        source_image_url,
+        dest_image_url
+    ]
+    subprocess.run(docker_tag_cmd)
+    
+
 def push_image_docker(image_url):
     """
     """
-
+    tag = 
     docker_push_cmd = [
         "docker",
         "push",
@@ -80,6 +92,7 @@ def main(args):
                 push_image_apptainer(pull_destination, push_image_url)
             else:
                 pull_image_docker(pull_image_url)
+                tag_image_docker(pull_image_url, push_image_url)
                 push_image_docker(push_image_url)
 
 
