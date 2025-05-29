@@ -14,7 +14,7 @@ process quast {
     printf -- "- process_name: quast\\n"                  >> ${sample_id}_quast_provenance.yml
     printf -- "  tools:\\n"                               >> ${sample_id}_quast_provenance.yml
     printf -- "    - tool_name: quast\\n"                 >> ${sample_id}_quast_provenance.yml
-    printf -- "      tool_version: \$(quast --version | cut -d ' ' -f 2 | tr -d 'v')\\n" >> ${sample_id}_quast_provenance.yml
+    printf -- "      tool_version: \$(quast --version | grep --invert-match '^WARNING' | cut -d ' ' -f 2 | tr -d 'v')\\n" >> ${sample_id}_quast_provenance.yml
     printf -- "      parameters:\\n"                      >> ${sample_id}_quast_provenance.yml
     printf -- "        - parameter: --space-efficient\\n" >> ${sample_id}_quast_provenance.yml
     printf -- "          value: null\\n"                  >> ${sample_id}_quast_provenance.yml
