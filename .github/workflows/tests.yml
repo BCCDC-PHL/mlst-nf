@@ -19,6 +19,9 @@ jobs:
           - nextflow_version: "24.10.6"
             java_version: "17"
             profile: "conda"
+	  - nextflow_version: "24.10.6"
+            java_version: "17"
+            profile: "docker"
     name: Nextflow v${{ matrix.nextflow_version }} / ${{ matrix.profile }}
     runs-on: ubuntu-latest
     steps:
