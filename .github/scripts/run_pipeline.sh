@@ -4,7 +4,6 @@ set -eo pipefail
 
 nextflow run main.nf \
 	 -profile "${PROFILE}" \
-	 --cache ${HOME}/.conda/envs \
 	 --assembly_input .github/data/assemblies \
 	 --outdir .github/data/test_output \
 	 --collect_outputs \
