@@ -1,4 +1,4 @@
-name: Build and Push Container Images
+name: Build Container Images
 
 on:
   push:
@@ -11,7 +11,7 @@ env:
   GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
     
 jobs:
-  build_and_push:
+  build_containers:
     runs-on: ubuntu-latest
     permissions:
       packages: write
