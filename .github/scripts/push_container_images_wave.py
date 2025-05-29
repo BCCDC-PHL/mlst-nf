@@ -58,7 +58,6 @@ def tag_image_docker(source_image_url, dest_image_url):
 def push_image_docker(image_url):
     """
     """
-    tag = 
     docker_push_cmd = [
         "docker",
         "push",
